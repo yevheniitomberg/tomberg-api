@@ -1,8 +1,10 @@
 package tech.tomberg.tombergapi.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
-import tech.tomberg.tombergapi.enums.SocialMedia;
 
 @Entity
 @Getter
@@ -11,11 +13,10 @@ import tech.tomberg.tombergapi.enums.SocialMedia;
 @AllArgsConstructor
 @Builder
 @ToString
-public class Contact {
+public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private SocialMedia portal;
-    private String link;
+    private String name;
+    private int percent;
 }
