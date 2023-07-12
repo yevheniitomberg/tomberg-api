@@ -2,7 +2,6 @@ package tech.tomberg.tombergapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import tech.tomberg.tombergapi.enums.SocialMedia;
 
 @Entity
 @Getter
@@ -11,11 +10,11 @@ import tech.tomberg.tombergapi.enums.SocialMedia;
 @AllArgsConstructor
 @Builder
 @ToString
-public class Contact {
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private SocialMedia portal;
-    private String link;
+    private String question;
+    @Column(length = 3000)
+    private String answer;
 }
