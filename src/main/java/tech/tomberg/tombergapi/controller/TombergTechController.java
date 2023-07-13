@@ -5,19 +5,24 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 import tech.tomberg.tombergapi.dto.ContactMeDto;
+import tech.tomberg.tombergapi.dto.ResponseDto;
 import tech.tomberg.tombergapi.dto.TombergTechData;
 import tech.tomberg.tombergapi.entity.Contact;
+import tech.tomberg.tombergapi.entity.ContactedPerson;
 import tech.tomberg.tombergapi.repository.*;
 import tech.tomberg.tombergapi.utils.Constants;
+import tech.tomberg.tombergapi.utils.Utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/tomberg-tech")
@@ -36,6 +41,7 @@ public class TombergTechController {
     private final QuestionRepository questionRepository;
     private final WorkRepository workRepository;
     private final JavaMailSender javaMailSender;
+    private final ContactedPersonRepository contactedPersonRepository;
 
     @GetMapping(value = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TombergTechData> getAllContacts() {
@@ -50,9 +56,15 @@ public class TombergTechController {
     }
 
     @PostMapping("/contact")
-    public ResponseEntity<?> userContactRequest(@RequestBody ContactMeDto contactMeDto) throws MessagingException {
+    public ResponseEntity<ResponseDto> userContactRequest(@RequestBody ContactMeDto contactMeDto) throws MessagingException {
+        ContactedPerson person = contactedPersonRepository.findById(contactMeDto.getEmail()).orElse(ContactedPerson.builder().email(contactMeDto.getEmail()).request(0).build());
+        if (person.getRequest() == Constants.EMAILS_PER_PERSON_LIMIT) {
+            return new ResponseEntity<>(ResponseDto.builder().timestamp(LocalDateTime.now()).data(Utils.getDefaultDataMap("Request limit exceeded!", true)).build(), HttpStatus.TOO_MANY_REQUESTS);
+        }
+        person.setRequest(person.getRequest() + 1);
+        contactedPersonRepository.save(person);
         sendEmailToUser(contactMeDto);
-        return ResponseEntity.ok(true);
+        return new ResponseEntity<>(ResponseDto.builder().timestamp(LocalDateTime.now()).data(Utils.getDefaultDataMap("Email was successfully sent!", false)).build(), HttpStatus.OK);
     }
 
     public void sendEmailToUser(ContactMeDto contactMeDto) throws MessagingException {
