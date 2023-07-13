@@ -12,43 +12,31 @@
           width: 100%;
           height: auto;
           padding: 30px 0;
-          background-image: linear-gradient(to bottom right, rgb(0, 115, 255), yellow);
-          display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .content {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-wrap: wrap;
-      }
-      .flex-item {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
       img {
         width: 50%;
         margin: 20px;
         max-width: 400px;
+        
       }
       .greeting {
-        width: 70%;
         font-size: 20px;
       }
       .social {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        align-items: center;
-        width: 70%;
-        flex-wrap: wrap;
+        margin: auto;
+        width: fit-content;
       }
       .social img {
         width: 50px;
-        margin: 0;
+        margin: 0 5px;
+      }
+      .td-img {
+        text-align: center;
+      }
+      table {
+        border: none;
+        width: 80%;
+        margin: auto;
       }
       @media screen and (max-width: 768px){
         .social img {
@@ -57,53 +45,61 @@
       }
     </style>
   </head>
-  <body>
-    <div class="content">
-      <div class="flex-item">
-        <img
-          src="https://tomberg.tech/ftp-images/tomberg.tech/logo_tomberg.png"
-          alt=""
-        />
-      </div>
-      <div class="flex-item">
-        <div class="greeting">
-          <p>Hello, USERNAME!</p>
-          <p>I'm glad you visited my portfolio site.</p>
-          <p>
-            I will try to answer your message left on the site as soon as
-            possible!
-          </p>
-          <hr />
-          <p>No-reply. This email was sent automatically.</p>
-        </div>
-      </div>
-      <div class="social">
-        <a href="FACEBOOK"
-          ><img
-            src="https://tomberg.tech/ftp-images/tomberg.tech/facebook.png"
+  <body style="background-image: linear-gradient(to bottom right, rgb(0, 115, 255), rgb(208, 208, 23))">
+    <table>
+      <tr>
+        <td class="td-img">
+          <img
+            src="https://tomberg.tech/ftp-images/tomberg.tech/logo_tomberg.png"
             alt=""
-        /></a>
-        <a href="INSTAGRAM"
-          ><img
-            src="https://tomberg.tech/ftp-images/tomberg.tech/instagram.png"
-            alt=""
-        /></a>
-        <a href="EMAIL"
-          ><img
-            src="https://tomberg.tech/ftp-images/tomberg.tech/email.png"
-            alt=""
-        /></a>
-        <a href="GITHUB"
-          ><img
-            src="https://tomberg.tech/ftp-images/tomberg.tech/github.png"
-            alt=""
-        /></a>
-        <a href="LINKEDIN"
-          ><img
-            src="https://tomberg.tech/ftp-images/tomberg.tech/linkedin.png"
-            alt=""
-        /></a>
-      </div>
-    </div>
+          />
+        </td>
+      </tr>
+      <tr>
+        <td style="color: black !important;">
+          <div class="greeting">
+            <p>Hello, USERNAME!</p>
+            <p>I'm glad you visited my portfolio site.</p>
+            <p>
+              I will try to answer your message left on the site as soon as
+              possible!
+            </p>
+            <hr />
+            <p>No-reply. This email was sent automatically.</p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="social">
+            <a href="FACEBOOK"
+              ><img
+                src="https://tomberg.tech/ftp-images/tomberg.tech/facebook.png"
+                alt=""
+            /></a>
+            <a href="INSTAGRAM"
+              ><img
+                src="https://tomberg.tech/ftp-images/tomberg.tech/instagram.png"
+                alt=""
+            /></a>
+            <a href="EMAIL"
+              ><img
+                src="https://tomberg.tech/ftp-images/tomberg.tech/email.png"
+                alt=""
+            /></a>
+            <a href="GITHUB"
+              ><img
+                src="https://tomberg.tech/ftp-images/tomberg.tech/github.png"
+                alt=""
+            /></a>
+            <a href="LINKEDIN"
+              ><img
+                src="https://tomberg.tech/ftp-images/tomberg.tech/linkedin.png"
+                alt=""
+            /></a>
+          </div
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
