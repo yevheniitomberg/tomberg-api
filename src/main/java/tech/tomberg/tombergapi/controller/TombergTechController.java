@@ -31,6 +31,8 @@ import java.time.LocalDateTime;
 public class TombergTechController {
     @Value("${spring.mail.username}")
     private String from;
+    @Value("${personal.mail}")
+    private String personalEmail;
     @Value("${local.dev}")
     private boolean isDev;
     private String path = Constants.PATH_TO_TEMPLATE_PROD;
@@ -63,11 +65,11 @@ public class TombergTechController {
         }
         person.setRequest(person.getRequest() + 1);
         contactedPersonRepository.save(person);
-        sendEmailToUser(contactMeDto);
+        sendEmails(contactMeDto);
         return new ResponseEntity<>(ResponseDto.builder().timestamp(LocalDateTime.now()).data(Utils.getDefaultDataMap("Email was successfully sent!", false)).build(), HttpStatus.OK);
     }
 
-    public void sendEmailToUser(ContactMeDto contactMeDto) throws MessagingException {
+    public void sendEmails(ContactMeDto contactMeDto) throws MessagingException {
         if (isDev) {
             path = Constants.PATH_TO_TEMPLATE_DEV;
         }
@@ -88,6 +90,10 @@ public class TombergTechController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        javaMailSender.send(message);
+        helper.setTo(personalEmail);
+        helper.setSubject(String.format("You were contacted by %s", contactMeDto.getName()));
+        message.setText(String.format("Message: %s\nEmail: %s", contactMeDto.getMessage(), contactMeDto.getEmail()));
         javaMailSender.send(message);
     }
 }
